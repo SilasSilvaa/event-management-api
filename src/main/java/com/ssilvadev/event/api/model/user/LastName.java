@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-class LastName {
+public class LastName {
 
     @Column(name = "last_name", nullable = false)
     private String value;

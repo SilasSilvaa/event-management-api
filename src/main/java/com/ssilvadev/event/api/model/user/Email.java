@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-class Email {
+public class Email {
 
     @Column(name = "email", nullable = false)
     private String value;
@@ -18,7 +18,7 @@ class Email {
     private void validate(String value) {
         String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
-        if (value.isEmpty() || value == null) {
+        if (value == null || value.isEmpty()) {
             throw new IllegalArgumentException("E-mail is required");
         }
 

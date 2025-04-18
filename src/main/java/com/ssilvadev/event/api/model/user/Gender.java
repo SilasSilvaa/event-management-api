@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-enum Gender {
+public enum Gender {
 
     FEMALE('F'),
     MALE('M');

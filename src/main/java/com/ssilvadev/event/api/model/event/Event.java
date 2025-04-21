@@ -84,6 +84,10 @@ public class Event {
             EventUrlImage eventImageUrl,
             Capacity capacity) {
 
+        if (capacity == null) {
+            throw new IllegalArgumentException("Capacity is required for in person event");
+        }
+
         return new Event(
                 title,
                 description,

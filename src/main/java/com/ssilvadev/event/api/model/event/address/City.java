@@ -14,6 +14,8 @@ public class City implements Validatable<String> {
     private String value;
 
     public City(String value) {
+        validate(value);
+
         this.value = value;
     }
 

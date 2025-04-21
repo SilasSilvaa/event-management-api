@@ -17,6 +17,8 @@ public class EventDate implements Validatable<Date> {
     private Date date;
 
     public EventDate(Date date) {
+        validate(date);
+
         this.date = date;
     }
 

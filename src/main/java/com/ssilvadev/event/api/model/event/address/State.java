@@ -14,6 +14,8 @@ public class State implements Validatable<String> {
     private String value;
 
     public State(String value) {
+        validate(value);
+
         this.value = value;
     }
 

@@ -14,6 +14,8 @@ public class Neighborhood implements Validatable<String> {
     private String value;
 
     public Neighborhood(String value) {
+        validate(value);
+        
         this.value = value;
     }
 

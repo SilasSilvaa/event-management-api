@@ -14,6 +14,8 @@ public class Street implements Validatable<String> {
     private String value;
 
     public Street(String value) {
+        validate(value);
+
         this.value = value;
     }
 

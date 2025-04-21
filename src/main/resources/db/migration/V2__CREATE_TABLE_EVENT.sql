@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `event` (
     `address_cep` VARCHAR(8) NOT NULL,
     `event_url` VARCHAR(150) NOT NULL,
     `event_image_url` VARCHAR(150) NOT NULL,
-    `capacity` INT NOT NULL,
+    `capacity` INT,
     `remote` BOOLEAN NOT NULL,
     PRIMARY KEY (`id`)
 );

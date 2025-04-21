@@ -22,11 +22,11 @@ public class EventUrlImage implements Validatable<String> {
     @Override
     public void validate(String value) {
         if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Event Url is required.");
+            throw new IllegalArgumentException("Event image Url is required.");
         }
 
         if (value.length() > 150) {
-            throw new IllegalArgumentException("Event Url cannot be longer than 150 characters.");
+            throw new IllegalArgumentException("Event image Url cannot be longer than 150 characters.");
         }
     }
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.ssilvadev.event.api.model.event.Event;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,19 +21,15 @@ public class User {
     private Long id;
 
     @Embedded
-    @Column(name = "name", nullable = false)
     private Name name;
 
     @Embedded
-    @Column(name = "last_name", nullable = false)
     private LastName lastName;
 
     @Embedded
-    @Column(name = "email", nullable = false)
     private Email email;
 
     @Embedded
-    @Column(name = "gender", nullable = false)
     private Gender gender;
 
     @ManyToMany(mappedBy = "eventSubscribers")

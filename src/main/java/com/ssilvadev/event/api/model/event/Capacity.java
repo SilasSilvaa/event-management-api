@@ -21,7 +21,7 @@ public class Capacity implements Validatable<Integer> {
 
     @Override
     public void validate(Integer value) {
-        if (capacity != null && capacity <= 0) {
+        if (value != null && value <= 0) {
             throw new IllegalArgumentException("The capacity must be greater than zero");
         }
     }

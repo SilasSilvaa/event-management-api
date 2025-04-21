@@ -157,7 +157,7 @@ public class Event {
     }
 
     public Integer getCapacity() {
-        return capacity.getValue();
+        return capacity != null ? capacity.getValue() : null;
     }
 
     public boolean isRemote() {

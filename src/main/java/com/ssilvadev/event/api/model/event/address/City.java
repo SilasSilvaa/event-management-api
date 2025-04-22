@@ -10,7 +10,7 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class City implements Validatable<String> {
 
-    @Column(name = "city", nullable = false)
+    @Column(name = "city")
     private String value;
 
     public City(String value) {

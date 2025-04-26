@@ -9,6 +9,9 @@ public class Email {
     @Column(name = "email", nullable = false)
     private String value;
 
+    public Email() {
+    }
+
     public Email(String value) {
         validate(value);
 

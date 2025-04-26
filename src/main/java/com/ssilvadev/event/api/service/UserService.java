@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssilvadev.event.api.dto.user.request.RequestUserDTO;
 import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
+import com.ssilvadev.event.api.exception.RequiredNonNullObject;
 import com.ssilvadev.event.api.mapper.DTOConverter;
 import com.ssilvadev.event.api.model.user.Email;
 import com.ssilvadev.event.api.model.user.Gender;
@@ -36,6 +37,10 @@ public class UserService {
     }
 
     public ResponseUserDTO createUser(RequestUserDTO userDTO) {
+
+        if (userDTO == null) {
+            throw new RequiredNonNullObject();
+        }
 
         var name = new Name(userDTO.name());
         var lastName = new LastName(userDTO.lastName());

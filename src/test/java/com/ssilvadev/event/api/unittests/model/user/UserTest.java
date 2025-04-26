@@ -28,9 +28,9 @@ class UserTest {
 
         assertNotNull(user);
 
-        assertEquals("Wood", user.getName().getValue());
-        assertEquals("Phethean", user.getLastName().getValue());
-        assertEquals("wphethean0@ebay.com", user.getEmail().getValue());
+        assertEquals("Wood", user.getName());
+        assertEquals("Phethean", user.getLastName());
+        assertEquals("wphethean0@ebay.com", user.getEmail());
         assertEquals(Gender.MALE, user.getGender());
     }
 

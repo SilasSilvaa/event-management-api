@@ -10,6 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.ssilvadev.event.api.exception.ExceptionResponse;
+import com.ssilvadev.event.api.exception.RequiredNonNullObject;
 
 @ControllerAdvice
 @RestController
@@ -27,6 +28,16 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handlerAllException(Exception e, WebRequest request) {
+        var response = new ExceptionResponse(
+                new Date(),
+                e.getMessage(),
+                request.getDescription(false));
+
+        return ResponseEntity.internalServerError().body(response);
+    }
+
+    @ExceptionHandler(RequiredNonNullObject.class)
+    public final ResponseEntity<ExceptionResponse> handlerRequiredNonNullObject(Exception e, WebRequest request) {
         var response = new ExceptionResponse(
                 new Date(),
                 e.getMessage(),

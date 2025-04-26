@@ -3,6 +3,6 @@ CREATE TABLE IF NOT EXISTS `user` (
     `name` varchar(100) NOT NULL,
     `last_name` varchar(100) NOT NULL,
     `email` varchar(100) NOT NULL UNIQUE,
-    `gender` ENUM('M', 'F') NOT NULL,
+    `gender` ENUM('MALE', 'FEMALE') NOT NULL,
     PRIMARY KEY (`id`)
 );

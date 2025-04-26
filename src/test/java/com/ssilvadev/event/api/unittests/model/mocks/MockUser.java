@@ -1,8 +1,5 @@
 package com.ssilvadev.event.api.unittests.model.mocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ssilvadev.event.api.model.user.Email;
 import com.ssilvadev.event.api.model.user.Gender;
 import com.ssilvadev.event.api.model.user.LastName;

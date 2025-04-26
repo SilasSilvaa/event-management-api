@@ -5,8 +5,11 @@ import java.util.List;
 
 import com.ssilvadev.event.api.model.event.Event;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,11 +32,15 @@ public class User {
     @Embedded
     private Email email;
 
-    @Embedded
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender", nullable = false)
     private Gender gender;
 
     @ManyToMany(mappedBy = "eventSubscribers")
     private List<Event> registeredEvents = new ArrayList<>();
+
+    public User() {
+    }
 
     public User(Name name, LastName lastName, Email email, Gender gender) {
         this.name = name;
@@ -46,20 +53,20 @@ public class User {
         return id;
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getValue();
     }
 
-    public LastName getLastName() {
-        return lastName;
+    public String getLastName() {
+        return lastName.getValue();
     }
 
-    public Email getEmail() {
-        return email;
+    public String getEmail() {
+        return email.getValue();
     }
 
-    public Gender getGender() {
-        return gender;
+    public String getGender() {
+        return gender.name();
     }
 
     public List<Event> getRegisteredEvents() {

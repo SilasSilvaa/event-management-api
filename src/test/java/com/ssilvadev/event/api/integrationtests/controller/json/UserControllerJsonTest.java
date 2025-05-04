@@ -34,18 +34,14 @@ import static io.restassured.RestAssured.given;
 class UserControllerJsonTest extends AbstractIntegrationTest {
 
     private static RequestSpecification specification;
-    // private static ObjectMapper mapper;
-
     private static MockUser mockUser;
     private static RequestUserDTO requestUser;
     private static ResponseUserDTO responseUser;
 
     @BeforeAll
     static void setup() {
-        // mapper = new ObjectMapper();
         mockUser = new MockUser();
         requestUser = mockUser.mockUserDto();
-        // mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         specification = new RequestSpecBuilder()
                 .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, TestConfigs.HEADER_PARAM_ORIGIN)

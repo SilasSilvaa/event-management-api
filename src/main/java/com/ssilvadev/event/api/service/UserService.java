@@ -1,5 +1,7 @@
 package com.ssilvadev.event.api.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,12 +22,14 @@ import com.ssilvadev.event.api.repository.UserRepository;
 public class UserService {
 
     private final UserRepository repository;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public UserService(UserRepository repository) {
         this.repository = repository;
     }
 
     public Page<ResponseUserDTO> getAllUsers(Pageable pageable) {
+        logger.info("Get all users");
 
         Page<User> entities = repository.findAll(pageable);
 
@@ -37,6 +41,7 @@ public class UserService {
     }
 
     public ResponseUserDTO createUser(RequestUserDTO userDTO) {
+        logger.info("Creating an user");
 
         if (userDTO == null) {
             throw new RequiredNonNullObject();

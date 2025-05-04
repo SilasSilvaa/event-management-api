@@ -14,6 +14,7 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.ssilvadev.event.api.mocks.MockEvent;
 import com.ssilvadev.event.api.model.event.Capacity;
 import com.ssilvadev.event.api.model.event.Description;
 import com.ssilvadev.event.api.model.event.Event;
@@ -25,7 +26,6 @@ import com.ssilvadev.event.api.model.event.address.City;
 import com.ssilvadev.event.api.model.event.address.Neighborhood;
 import com.ssilvadev.event.api.model.event.address.State;
 import com.ssilvadev.event.api.model.event.address.Street;
-import com.ssilvadev.event.api.unittests.model.mocks.MockEvent;
 
 public class EventTest {
     private Event inPersonevent = new MockEvent().mockInPersonEventEntity();

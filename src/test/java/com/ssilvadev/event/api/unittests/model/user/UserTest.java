@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.ssilvadev.event.api.mocks.MockUser;
 import com.ssilvadev.event.api.model.user.Email;
 import com.ssilvadev.event.api.model.user.Gender;
 import com.ssilvadev.event.api.model.user.LastName;
 import com.ssilvadev.event.api.model.user.Name;
 import com.ssilvadev.event.api.model.user.User;
-import com.ssilvadev.event.api.unittests.model.mocks.MockUser;
 
 class UserTest {
 
@@ -31,7 +31,7 @@ class UserTest {
         assertEquals("Wood", user.getName());
         assertEquals("Phethean", user.getLastName());
         assertEquals("wphethean0@ebay.com", user.getEmail());
-        assertEquals(Gender.MALE, user.getGender());
+        assertEquals(Gender.MALE.name(), user.getGender());
     }
 
     @Test

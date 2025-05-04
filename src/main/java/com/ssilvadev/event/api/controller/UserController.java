@@ -18,7 +18,7 @@ import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
 import com.ssilvadev.event.api.service.UserService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user/v1")
 public class UserController {
 
     private final UserService service;
@@ -43,8 +43,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseUserDTO> createUser(@RequestBody RequestUserDTO userDTO) {
-
+    public ResponseEntity<ResponseUserDTO> createUser(@RequestBody(required = true) RequestUserDTO userDTO) {
         return ResponseEntity.ok(service.createUser(userDTO));
     }
 }

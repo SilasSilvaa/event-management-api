@@ -9,6 +9,9 @@ public class LastName {
     @Column(name = "last_name", nullable = false)
     private String value;
 
+    public LastName() {
+    }
+
     public LastName(String value) {
         validate(value);
 

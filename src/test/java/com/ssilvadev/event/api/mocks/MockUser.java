@@ -1,4 +1,4 @@
-package com.ssilvadev.event.api.unittests.model.mocks;
+package com.ssilvadev.event.api.mocks;
 
 import java.util.ArrayList;
 import java.util.List;

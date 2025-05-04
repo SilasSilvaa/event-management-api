@@ -10,12 +10,12 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class Neighborhood implements Validatable<String> {
 
-    @Column(name = "neighborhood", nullable = false)
+    @Column(name = "neighborhood")
     private String value;
 
     public Neighborhood(String value) {
         validate(value);
-        
+
         this.value = value;
     }
 

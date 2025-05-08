@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.ssilvadev.event.api.exception.ExceptionResponse;
 import com.ssilvadev.event.api.exception.RequiredNonNullObject;
+import com.ssilvadev.event.api.exception.UserNotFound;
 
 @ControllerAdvice
 @RestController
@@ -46,4 +47,13 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
         return ResponseEntity.internalServerError().body(response);
     }
 
+    @ExceptionHandler(UserNotFound.class)
+    public final ResponseEntity<ExceptionResponse> handlerUserNotFound(Exception e, WebRequest request) {
+        var response = new ExceptionResponse(
+                new Date(),
+                e.getMessage(),
+                request.getDescription(false));
+
+        return ResponseEntity.internalServerError().body(response);
+    }
 }

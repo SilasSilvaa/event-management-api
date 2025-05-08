@@ -5,10 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +31,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.ssilvadev.event.api.dto.user.response.Gender;
 import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
 import com.ssilvadev.event.api.exception.RequiredNonNullObject;
+import com.ssilvadev.event.api.exception.UserNotFound;
 import com.ssilvadev.event.api.model.user.User;
 import com.ssilvadev.event.api.repository.UserRepository;
 import com.ssilvadev.event.api.service.UserService;
@@ -39,10 +46,17 @@ public class UserServiceTest {
     @InjectMocks
     private UserService service;
 
+    private static MockUser mockUser;
+
+    @BeforeAll
+    static void setUp() {
+        mockUser = new MockUser();
+    }
+
     @Test
     void shouldCreateAUser() {
-        var mockUser = new MockUser();
         var dto = mockUser.mockUserDto();
+        // var user = mockUser.mockUserEntity();
 
         when(repository.save(any(User.class))).thenAnswer(invocation -> {
             User u = invocation.getArgument(0);
@@ -51,7 +65,7 @@ public class UserServiceTest {
 
         });
 
-        ResponseUserDTO result = service.createUser(dto);
+        ResponseUserDTO result = service.create(dto);
 
         assertNotNull(result);
         assertNotNull(result.id());
@@ -64,7 +78,7 @@ public class UserServiceTest {
 
     @Test
     void shouldThrowExceptionWhenCreateUserWithNullArgument() {
-        Exception exception = assertThrows(RequiredNonNullObject.class, () -> service.createUser(null));
+        Exception exception = assertThrows(RequiredNonNullObject.class, () -> service.create(null));
 
         String expectedMessage = "It is not allowed to persist a null object!";
         String actualMessage = exception.getMessage();
@@ -73,15 +87,41 @@ public class UserServiceTest {
     }
 
     @Test
+    void shouldGetUserById() {
+        var user = mockUser.mockUserEntity();
+
+        when(repository.findById(anyLong())).thenReturn(Optional.of(user));
+
+        ResponseUserDTO response = service.findById(1L);
+
+        assertNotNull(response);
+
+        assertEquals("Wood", response.name());
+        assertEquals("Wood", response.name());
+        assertEquals("Phethean", response.lastName());
+        assertEquals("wphethean0@ebay.com", response.email());
+        assertEquals(Gender.MALE, response.gender());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGetUserWithInvalidId() {
+        Exception exception = assertThrows(UserNotFound.class, () -> service.findById(null));
+
+        String expectedMessage = "User not found.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
     void shouldGetAllUsers() {
-        var mockUser = new MockUser();
         List<User> list = mockUser.mockListEntity();
 
         when(repository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(list));
 
         Pageable pageable = PageRequest.of(0, 10, Sort.by(Direction.ASC, "name"));
 
-        Page<ResponseUserDTO> allUsers = service.getAllUsers(pageable);
+        Page<ResponseUserDTO> allUsers = service.getAll(pageable);
 
         assertNotNull(allUsers);
         assertEquals(list.size(), allUsers.getSize());
@@ -107,5 +147,20 @@ public class UserServiceTest {
         assertEquals("Phethean", userFour.lastName());
         assertEquals("wphethean0@ebay.com", userFour.email());
         assertEquals(Gender.MALE, userFour.gender());
+    }
+
+    @Test
+    void shouldDeleteUserById() {
+        var user = mockUser.mockUserEntity();
+        ReflectionTestUtils.setField(user, "id", 1L);
+
+        when(repository.findById(anyLong())).thenReturn(Optional.of(user));
+
+        service.delete(1L);
+
+        verify(repository, times(1)).findById(anyLong());
+        verify(repository, times(1)).delete(any(User.class));
+
+        verifyNoMoreInteractions(repository);
     }
 }

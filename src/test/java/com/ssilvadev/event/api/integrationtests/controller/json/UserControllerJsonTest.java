@@ -12,9 +12,9 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ssilvadev.event.api.configs.TestConfigs;
 import com.ssilvadev.event.api.dto.user.request.RequestUserDTO;
+import com.ssilvadev.event.api.dto.user.response.Gender;
 import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
 import com.ssilvadev.event.api.dto.user.response.WrapperResponseDTO;
 import com.ssilvadev.event.api.integrationtests.testcontainers.AbstractIntegrationTest;
@@ -36,7 +36,6 @@ class UserControllerJsonTest extends AbstractIntegrationTest {
     private static RequestSpecification specification;
     private static MockUser mockUser;
     private static RequestUserDTO requestUser;
-    private static ResponseUserDTO responseUser;
 
     @BeforeAll
     static void setup() {
@@ -54,7 +53,7 @@ class UserControllerJsonTest extends AbstractIntegrationTest {
 
     @Test
     @Order(1)
-    void shouldCreateUser() throws JsonProcessingException {
+    void shouldCreateUser() {
         var response = given(specification)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(requestUser)
@@ -68,12 +67,10 @@ class UserControllerJsonTest extends AbstractIntegrationTest {
                 .as(new TypeRef<ResponseUserDTO>() {
                 });
 
-        responseUser = response;
+        assertNotNull(response);
+        assertNotNull(response.id());
 
-        assertNotNull(responseUser);
-        assertNotNull(responseUser.id());
-
-        assertTrue(responseUser.id() > 0);
+        assertTrue(response.id() > 0);
 
         assertEquals("Wood", requestUser.name());
         assertEquals("Phethean", requestUser.lastName());
@@ -94,7 +91,7 @@ class UserControllerJsonTest extends AbstractIntegrationTest {
 
     @Test
     @Order(3)
-    void shouldGetAllUser() throws JsonProcessingException {
+    void shouldGetAllUser() {
         var response = given(specification)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .queryParam("page", 0,
@@ -130,5 +127,130 @@ class UserControllerJsonTest extends AbstractIntegrationTest {
         assertEquals("Souza", userEight.lastName());
         assertEquals("maria.souza@example.com", userEight.email());
         assertEquals("FEMALE", userEight.gender().name());
+    }
+
+    @Test
+    @Order(4)
+    void shouldGetAnUser() {
+        var response = given(specification)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .pathParam("id", 1L)
+                .when()
+                .get("{id}")
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .as(new TypeRef<ResponseUserDTO>() {
+                });
+
+        assertNotNull(response);
+        assertNotNull(response.id());
+
+        assertEquals("João", response.name());
+        assertEquals("Silva", response.lastName());
+        assertEquals("joao.silva@example.com", response.email());
+        assertEquals("MALE", response.gender().name());
+    }
+
+    @Test
+    @Order(5)
+    void shouldThowExceptionWhenGetUserWithInvalidId() {
+        given(specification)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .pathParam("id", "invalidId")
+                .when()
+                .get("{id}")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @Order(6)
+    void shouldUpdateUser() {
+        var request = new RequestUserDTO(
+                "Wood",
+                "Phethean John",
+                "wphethean0@ebay.com",
+                Gender.MALE);
+
+        var response = given(specification)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .pathParam("id", 11L)
+                .when()
+                .put("{id}")
+                .then()
+                .statusCode(200)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .extract()
+                .body()
+                .as(new TypeRef<ResponseUserDTO>() {
+                });
+
+        assertNotNull(response);
+        assertNotNull(response.id());
+
+        assertTrue(response.id() > 0);
+
+        assertEquals("Wood", response.name());
+        assertEquals("Phethean John", response.lastName());
+        assertEquals("wphethean0@ebay.com", response.email());
+        assertEquals("MALE", response.gender().name());
+    }
+
+    @Test
+    @Order(7)
+    void shouldThowExceptionWhenUpdateWithNullBody() {
+        given(specification)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .pathParam("id", 11L)
+                .when()
+                .put("{id}")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @Order(8)
+    void shouldThowExceptionWhenUpdateWithInvalidId() {
+        var request = new RequestUserDTO(
+                "Wood",
+                "Phethean John",
+                "wphethean0@ebay.com",
+                Gender.MALE);
+
+        given(specification)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .pathParam("id", "invalidId")
+                .when()
+                .put("{id}")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @Order(9)
+    void shoulDeletUser() {
+        given(specification)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .pathParam("id", 11L)
+                .delete("{id}")
+                .then()
+                .statusCode(204);
+    }
+
+    @Test
+    @Order(510)
+    void shouldThowExceptionWhenDeleteUserWithInvalidId() {
+        given(specification)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .pathParam("id", "invalidId")
+                .when()
+                .delete("{id}")
+                .then()
+                .statusCode(400);
     }
 }

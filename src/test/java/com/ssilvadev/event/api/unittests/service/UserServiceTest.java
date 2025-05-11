@@ -33,10 +33,10 @@ import com.ssilvadev.event.api.dto.user.response.Gender;
 import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
 import com.ssilvadev.event.api.exception.RequiredNonNullObject;
 import com.ssilvadev.event.api.exception.UserNotFound;
+import com.ssilvadev.event.api.mocks.MockUser;
 import com.ssilvadev.event.api.model.user.User;
 import com.ssilvadev.event.api.repository.UserRepository;
 import com.ssilvadev.event.api.service.UserService;
-import com.ssilvadev.event.api.unittests.model.mocks.MockUser;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {

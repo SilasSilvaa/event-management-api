@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +28,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.ssilvadev.event.api.dto.user.request.RequestUserDTO;
 import com.ssilvadev.event.api.dto.user.response.Gender;
 import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
 import com.ssilvadev.event.api.exception.RequiredNonNullObject;
@@ -45,25 +46,20 @@ public class UserServiceTest {
 
     @InjectMocks
     private UserService service;
-
+    private static User user;
     private static MockUser mockUser;
+    private static RequestUserDTO dto;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         mockUser = new MockUser();
+        user = mockUser.mockUserEntity();
+        dto = mockUser.mockUserDto();
     }
 
     @Test
     void shouldCreateAUser() {
-        var dto = mockUser.mockUserDto();
-        // var user = mockUser.mockUserEntity();
-
-        when(repository.save(any(User.class))).thenAnswer(invocation -> {
-            User u = invocation.getArgument(0);
-            ReflectionTestUtils.setField(u, "id", 1L);
-            return u;
-
-        });
+        when(repository.save(any(User.class))).thenReturn(user);
 
         ResponseUserDTO result = service.create(dto);
 
@@ -88,8 +84,6 @@ public class UserServiceTest {
 
     @Test
     void shouldGetUserById() {
-        var user = mockUser.mockUserEntity();
-
         when(repository.findById(anyLong())).thenReturn(Optional.of(user));
 
         ResponseUserDTO response = service.findById(1L);
@@ -150,8 +144,30 @@ public class UserServiceTest {
     }
 
     @Test
+    void shouldUpdateAUser() {
+        var dto = new RequestUserDTO(
+                "Wood",
+                "Phehean Robbings",
+                "wphethean0@ebay.com",
+                Gender.MALE);
+
+        when(repository.findById(1L))
+                .thenReturn(Optional.of(user));
+        when(repository.save(any(User.class))).thenReturn(user);
+
+        ResponseUserDTO result = service.update(1L, dto);
+
+        assertNotNull(result);
+        assertNotNull(result.id());
+
+        assertEquals("Wood", result.name());
+        assertEquals("Phehean Robbings", result.lastName());
+        assertEquals("wphethean0@ebay.com", result.email());
+        assertEquals(Gender.MALE, result.gender());
+    }
+
+    @Test
     void shouldDeleteUserById() {
-        var user = mockUser.mockUserEntity();
         ReflectionTestUtils.setField(user, "id", 1L);
 
         when(repository.findById(anyLong())).thenReturn(Optional.of(user));

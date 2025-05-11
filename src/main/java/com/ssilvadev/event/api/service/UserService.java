@@ -61,18 +61,24 @@ public class UserService {
     }
 
     public ResponseUserDTO findById(Long id) {
-        logger.info("Finding user by id");
+        logger.info("Finding user by id {}", id);
 
-        Optional<User> user = repository.findById(id);
+        var user = getUserOrThrow(id);
 
-        if (user.isEmpty()) {
-            logger.error("User not found by id");
-            throw new UserNotFound();
-        }
-
-        ResponseUserDTO response = DTOConverter.userToResponseDTO(user.get());
+        ResponseUserDTO response = DTOConverter.userToResponseDTO(user);
 
         return response;
+    }
+
+    public ResponseUserDTO update(Long id, RequestUserDTO userDTO) {
+        logger.info("Updating user with ID {}", id);
+
+        var entity = getUserOrThrow(id);
+
+        entity.updateProperties(userDTO);
+        repository.save(entity);
+
+        return DTOConverter.userToResponseDTO(entity);
     }
 
     public void delete(Long id) {
@@ -83,4 +89,14 @@ public class UserService {
         repository.delete(entity);
     }
 
+    private User getUserOrThrow(Long id) {
+        var entity = repository.findById(id);
+
+        if (entity.isEmpty()) {
+            logger.error("User not found by id {}", id);
+            throw new UserNotFound();
+        }
+
+        return entity.get();
+    }
 }

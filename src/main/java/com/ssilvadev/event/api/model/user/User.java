@@ -3,6 +3,7 @@ package com.ssilvadev.event.api.model.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ssilvadev.event.api.dto.user.request.RequestUserDTO;
 import com.ssilvadev.event.api.model.event.Event;
 
 import jakarta.persistence.Column;
@@ -47,6 +48,15 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.gender = gender;
+    }
+
+    public User updateProperties(RequestUserDTO dto) {
+        this.name = new Name(dto.name());
+        this.lastName = new LastName(dto.lastName());
+        this.email = new Email(dto.email());
+        this.gender = Gender.valueOf(dto.gender().name());
+
+        return this;
     }
 
     public Long getId() {

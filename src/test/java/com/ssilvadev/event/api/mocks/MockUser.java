@@ -20,6 +20,7 @@ public class MockUser {
         var gender = Gender.MALE;
 
         User user = new User(name, lastName, email, gender);
+        ReflectionTestUtils.setField(user, "id", 1L);
 
         return user;
     }

@@ -55,6 +55,10 @@ public class Event {
     @Column(name = "remote", nullable = false)
     private boolean remote;
 
+    public Event() {
+
+    }
+
     private Event(
             Title title,
             Description description,
@@ -104,7 +108,8 @@ public class Event {
             Description description,
             EventDate date,
             EventUrl eventUrl,
-            EventUrlImage eventImageUrl) {
+            EventUrlImage eventImageUrl,
+            Capacity capacity) {
 
         return new Event(title,
                 description,
@@ -112,7 +117,7 @@ public class Event {
                 null,
                 eventUrl,
                 eventImageUrl,
-                null,
+                capacity,
                 true);
 
     }

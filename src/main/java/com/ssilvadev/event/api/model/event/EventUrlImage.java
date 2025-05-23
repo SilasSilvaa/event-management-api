@@ -10,8 +10,12 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class EventUrlImage implements Validatable<String> {
 
-    @Column(name = "event_url_image", nullable = false)
+    @Column(name = "event_image_url", nullable = false)
     private String value;
+
+    public EventUrlImage() {
+
+    }
 
     public EventUrlImage(String value) {
         validate(value);

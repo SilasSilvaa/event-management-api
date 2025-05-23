@@ -8,8 +8,12 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class CEP implements Validatable<String> {
 
-    @Column(name = "cep")
+    @Column(name = "address_cep")
     private String value;
+
+    public CEP() {
+
+    }
 
     public CEP(String value) {
         validate(value);

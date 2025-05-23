@@ -3,7 +3,6 @@ package com.ssilvadev.event.api.unittests.model.event;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -75,8 +74,9 @@ public class EventTest {
         assertEquals("https://www.techevent.com/2/eventbanner.png", remoteEvent.getImageUrl());
         assertEquals("Take part in the biggest technology 2º event of the year! There will be three days of talks.",
                 remoteEvent.getDescription());
+
         assertEquals(eventDate.getDate().getTime(), remoteEvent.getDate().getTime());
-        assertNull(remoteEvent.getCapacity());
+        assertEquals(100, remoteEvent.getCapacity());
 
         assertTrue(remoteEvent.isRemote());
     }

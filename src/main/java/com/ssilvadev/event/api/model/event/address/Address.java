@@ -23,6 +23,10 @@ public class Address {
     @Embedded
     private CEP cep;
 
+    public Address() {
+
+    }
+
     public Address(
             Street street,
             Neighborhood neighborhood,

@@ -16,6 +16,10 @@ public class EventDate implements Validatable<Date> {
     @Column(name = "event_date", nullable = false)
     private Date date;
 
+    public EventDate() {
+
+    }
+
     public EventDate(Date date) {
         validate(date);
 

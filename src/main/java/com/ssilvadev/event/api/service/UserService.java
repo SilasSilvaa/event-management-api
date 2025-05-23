@@ -1,7 +1,5 @@
 package com.ssilvadev.event.api.service;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssilvadev.event.api.dto.user.request.RequestUserDTO;
 import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
+import com.ssilvadev.event.api.exception.EmailAlreadyExists;
 import com.ssilvadev.event.api.exception.RequiredNonNullObject;
 import com.ssilvadev.event.api.exception.UserNotFound;
 import com.ssilvadev.event.api.mapper.DTOConverter;
@@ -50,6 +49,8 @@ public class UserService {
             throw new RequiredNonNullObject();
         }
 
+        validateEmailIsUnique(userDTO.email());
+
         var name = new Name(userDTO.name());
         var lastName = new LastName(userDTO.lastName());
         var email = new Email(userDTO.email());
@@ -84,8 +85,7 @@ public class UserService {
     public void delete(Long id) {
         logger.info("deleting user by id");
 
-        ResponseUserDTO response = findById(id);
-        var entity = DTOConverter.responseDTOToUser(response);
+        var entity = getUserOrThrow(id);
         repository.delete(entity);
     }
 
@@ -98,5 +98,14 @@ public class UserService {
         }
 
         return entity.get();
+    }
+
+    private void validateEmailIsUnique(String email) {
+        logger.info("Checking if a user already exists by email {}", email);
+
+        if (repository.existsByEmail(new Email(email))) {
+            logger.error("The user already exists by e-mail {}", email);
+            throw new EmailAlreadyExists();
+        }
     }
 }

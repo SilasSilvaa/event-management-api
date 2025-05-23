@@ -13,6 +13,10 @@ public class EventUrl implements Validatable<String> {
     @Column(name = "event_url", nullable = false)
     private String value;
 
+    public EventUrl() {
+
+    }
+
     public EventUrl(String value) {
         validate(value);
 

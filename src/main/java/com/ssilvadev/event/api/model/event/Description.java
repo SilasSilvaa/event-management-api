@@ -13,6 +13,10 @@ public class Description implements Validatable<String> {
     @Column(name = "description", nullable = false)
     private String value;
 
+    public Description() {
+
+    }
+
     public Description(String value) {
         validate(value);
 

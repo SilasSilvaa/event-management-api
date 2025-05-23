@@ -13,6 +13,10 @@ public class Capacity implements Validatable<Integer> {
     @Column(name = "capacity", nullable = true)
     private Integer capacity;
 
+    public Capacity() {
+
+    }
+
     public Capacity(Integer capacity) {
         validate(capacity);
 

@@ -15,8 +15,8 @@ import org.springframework.http.MediaType;
 import com.ssilvadev.event.api.configs.TestConfigs;
 import com.ssilvadev.event.api.dto.user.request.RequestUserDTO;
 import com.ssilvadev.event.api.dto.user.response.Gender;
-import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
-import com.ssilvadev.event.api.dto.user.response.WrapperResponseDTO;
+import com.ssilvadev.event.api.dto.usertest.response.ResponseUserDTO;
+import com.ssilvadev.event.api.dto.usertest.response.WrapperResponseDTO;
 import com.ssilvadev.event.api.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.ssilvadev.event.api.mocks.MockUser;
 
@@ -243,7 +243,7 @@ class UserControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(510)
+    @Order(10)
     void shouldThowExceptionWhenDeleteUserWithInvalidId() {
         given(specification)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

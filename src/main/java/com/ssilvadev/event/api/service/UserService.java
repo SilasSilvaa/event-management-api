@@ -85,8 +85,7 @@ public class UserService {
     public void delete(Long id) {
         logger.info("deleting user by id");
 
-        ResponseUserDTO response = findById(id);
-        var entity = DTOConverter.responseDTOToUser(response);
+        var entity = getUserOrThrow(id);
         repository.delete(entity);
     }
 

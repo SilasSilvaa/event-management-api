@@ -31,9 +31,11 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.ssilvadev.event.api.dto.user.request.RequestUserDTO;
 import com.ssilvadev.event.api.dto.user.response.Gender;
 import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
+import com.ssilvadev.event.api.exception.EmailAlreadyExists;
 import com.ssilvadev.event.api.exception.RequiredNonNullObject;
 import com.ssilvadev.event.api.exception.UserNotFound;
 import com.ssilvadev.event.api.mocks.MockUser;
+import com.ssilvadev.event.api.model.user.Email;
 import com.ssilvadev.event.api.model.user.User;
 import com.ssilvadev.event.api.repository.UserRepository;
 import com.ssilvadev.event.api.service.UserService;
@@ -70,6 +72,13 @@ public class UserServiceTest {
         assertEquals("Phethean", result.lastName());
         assertEquals("wphethean0@ebay.com", result.email());
         assertEquals(Gender.MALE, result.gender());
+    }
+
+    @Test
+    void shouldThrowExeceptionWhenCreateAUserWithExistEmail() {
+        when(repository.existsByEmail(any(Email.class))).thenReturn(true);
+
+        assertThrows(EmailAlreadyExists.class, () -> service.create(dto));
     }
 
     @Test

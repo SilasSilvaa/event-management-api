@@ -10,6 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.ssilvadev.event.api.exception.EmailAlreadyExists;
+import com.ssilvadev.event.api.exception.EventNotFound;
 import com.ssilvadev.event.api.exception.ExceptionResponse;
 import com.ssilvadev.event.api.exception.RequiredNonNullObject;
 import com.ssilvadev.event.api.exception.UserNotFound;
@@ -35,6 +36,7 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
                 e.getMessage(),
                 request.getDescription(false));
 
+        e.printStackTrace();
         return ResponseEntity.internalServerError().body(response);
     }
 
@@ -50,6 +52,16 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler(UserNotFound.class)
     public final ResponseEntity<ExceptionResponse> handlerUserNotFound(Exception e, WebRequest request) {
+        var response = new ExceptionResponse(
+                new Date(),
+                e.getMessage(),
+                request.getDescription(false));
+
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(EventNotFound.class)
+    public final ResponseEntity<ExceptionResponse> handlerEventNotFound(Exception e, WebRequest request) {
         var response = new ExceptionResponse(
                 new Date(),
                 e.getMessage(),

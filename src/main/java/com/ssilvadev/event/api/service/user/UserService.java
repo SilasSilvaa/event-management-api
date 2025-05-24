@@ -1,4 +1,4 @@
-package com.ssilvadev.event.api.service;
+package com.ssilvadev.event.api.service.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ import com.ssilvadev.event.api.model.user.Gender;
 import com.ssilvadev.event.api.model.user.LastName;
 import com.ssilvadev.event.api.model.user.Name;
 import com.ssilvadev.event.api.model.user.User;
-import com.ssilvadev.event.api.repository.UserRepository;
+import com.ssilvadev.event.api.repository.user.UserRepository;
 
 @Service
 public class UserService {

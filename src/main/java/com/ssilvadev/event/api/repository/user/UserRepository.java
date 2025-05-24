@@ -1,4 +1,4 @@
-package com.ssilvadev.event.api.repository;
+package com.ssilvadev.event.api.repository.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

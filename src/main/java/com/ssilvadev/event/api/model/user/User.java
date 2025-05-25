@@ -1,11 +1,6 @@
 package com.ssilvadev.event.api.model.user;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ssilvadev.event.api.dto.user.request.RequestUserDTO;
-import com.ssilvadev.event.api.model.event.Event;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -14,7 +9,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,9 +30,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
     private Gender gender;
-
-    @ManyToMany(mappedBy = "eventSubscribers")
-    private List<Event> registeredEvents = new ArrayList<>();
 
     public User() {
     }
@@ -77,10 +68,6 @@ public class User {
 
     public String getGender() {
         return gender.name();
-    }
-
-    public List<Event> getRegisteredEvents() {
-        return registeredEvents;
     }
 
     @Override

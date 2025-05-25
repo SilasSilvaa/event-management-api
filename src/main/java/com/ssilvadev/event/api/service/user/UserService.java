@@ -19,12 +19,14 @@ import com.ssilvadev.event.api.model.user.LastName;
 import com.ssilvadev.event.api.model.user.Name;
 import com.ssilvadev.event.api.model.user.User;
 import com.ssilvadev.event.api.repository.user.UserRepository;
+import com.ssilvadev.event.api.service.utils.ServiceUtils;
 
 @Service
 public class UserService {
 
     private final UserRepository repository;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private final static ServiceUtils serviceUtils = new ServiceUtils(UserService.class);
 
     public UserService(UserRepository repository) {
         this.repository = repository;
@@ -64,9 +66,9 @@ public class UserService {
     public ResponseUserDTO findById(Long id) {
         logger.info("Finding user by id {}", id);
 
-        var user = getUserOrThrow(id);
+        var entity = serviceUtils.getEntityOrThrow(repository, id, new UserNotFound());
 
-        ResponseUserDTO response = DTOConverter.userToResponseDTO(user);
+        ResponseUserDTO response = DTOConverter.userToResponseDTO(entity);
 
         return response;
     }
@@ -74,7 +76,7 @@ public class UserService {
     public ResponseUserDTO update(Long id, RequestUserDTO userDTO) {
         logger.info("Updating user with ID {}", id);
 
-        var entity = getUserOrThrow(id);
+        var entity = serviceUtils.getEntityOrThrow(repository, id, new UserNotFound());
 
         entity.updateProperties(userDTO);
         repository.save(entity);
@@ -85,19 +87,8 @@ public class UserService {
     public void delete(Long id) {
         logger.info("deleting user by id");
 
-        var entity = getUserOrThrow(id);
+        var entity = serviceUtils.getEntityOrThrow(repository, id, new UserNotFound());
         repository.delete(entity);
-    }
-
-    private User getUserOrThrow(Long id) {
-        var entity = repository.findById(id);
-
-        if (entity.isEmpty()) {
-            logger.error("User not found by id {}", id);
-            throw new UserNotFound();
-        }
-
-        return entity.get();
     }
 
     private void validateEmailIsUnique(String email) {

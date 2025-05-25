@@ -2,6 +2,7 @@ package com.ssilvadev.event.api.exception.handler;
 
 import java.util.Date;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,6 +14,8 @@ import com.ssilvadev.event.api.exception.EmailAlreadyExists;
 import com.ssilvadev.event.api.exception.EventNotFound;
 import com.ssilvadev.event.api.exception.ExceptionResponse;
 import com.ssilvadev.event.api.exception.RequiredNonNullObject;
+import com.ssilvadev.event.api.exception.SubscriptionNotFound;
+import com.ssilvadev.event.api.exception.UserAlreadyRegistred;
 import com.ssilvadev.event.api.exception.UserNotFound;
 
 @ControllerAdvice
@@ -57,7 +60,7 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
                 e.getMessage(),
                 request.getDescription(false));
 
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(EventNotFound.class)
@@ -67,7 +70,7 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
                 e.getMessage(),
                 request.getDescription(false));
 
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(EmailAlreadyExists.class)
@@ -78,5 +81,25 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
                 request.getDescription(false));
 
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(UserAlreadyRegistred.class)
+    public final ResponseEntity<ExceptionResponse> handlerUserAlreadyRegistredOnEvent(Exception e, WebRequest request) {
+        var response = new ExceptionResponse(
+                new Date(),
+                e.getMessage(),
+                request.getDescription(false));
+
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(SubscriptionNotFound.class)
+    public final ResponseEntity<ExceptionResponse> handlerSubsctiptionNotFound(Exception e, WebRequest request) {
+        var response = new ExceptionResponse(
+                new Date(),
+                e.getMessage(),
+                request.getDescription(false));
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }

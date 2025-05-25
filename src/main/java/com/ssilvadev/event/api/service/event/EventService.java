@@ -27,12 +27,14 @@ import com.ssilvadev.event.api.model.event.address.Neighborhood;
 import com.ssilvadev.event.api.model.event.address.State;
 import com.ssilvadev.event.api.model.event.address.Street;
 import com.ssilvadev.event.api.repository.event.EventRepository;
+import com.ssilvadev.event.api.service.utils.ServiceUtils;
 
 @Service
 public class EventService {
 
     private final EventRepository repository;
     private static Logger logger = LoggerFactory.getLogger(EventService.class);
+    private final static ServiceUtils serviceUtils = new ServiceUtils(EventService.class);
 
     public EventService(EventRepository repository) {
         this.repository = repository;
@@ -52,7 +54,7 @@ public class EventService {
     public ResponseEventDTO findById(Long id) {
         logger.info("Finding event by id {}", id);
 
-        var entity = getEventOrThrow(id);
+        var entity = serviceUtils.getEntityOrThrow(repository, id, new EventNotFound());
 
         return EventMapper.entityToDTO(entity);
     }
@@ -116,20 +118,9 @@ public class EventService {
     public void delete(Long id) {
         logger.info("Deleting event by id {}", id);
 
-        var event = getEventOrThrow(id);
-        repository.delete(event);
-    }
+        var entity = serviceUtils.getEntityOrThrow(repository, id, new EventNotFound());
 
-    private Event getEventOrThrow(Long id) {
-        logger.info("Finding event by id {}", id);
-        var entity = repository.findById(id);
-
-        if (entity.isEmpty()) {
-            logger.error("Event not found by id {}", id);
-            throw new EventNotFound();
-        }
-
-        return entity.get();
+        repository.delete(entity);
     }
 
     private Address getAddress(RequestInPersonEventDTO dto) {

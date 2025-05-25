@@ -1,4 +1,4 @@
-package com.ssilvadev.event.api.controller;
+package com.ssilvadev.event.api.controller.user;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssilvadev.event.api.dto.user.request.RequestUserDTO;
 import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
-import com.ssilvadev.event.api.service.UserService;
+import com.ssilvadev.event.api.service.user.UserService;
 
 @RestController
 @RequestMapping("/api/user/v1")

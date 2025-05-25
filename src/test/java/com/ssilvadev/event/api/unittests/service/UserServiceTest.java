@@ -37,8 +37,8 @@ import com.ssilvadev.event.api.exception.UserNotFound;
 import com.ssilvadev.event.api.mocks.MockUser;
 import com.ssilvadev.event.api.model.user.Email;
 import com.ssilvadev.event.api.model.user.User;
-import com.ssilvadev.event.api.repository.UserRepository;
-import com.ssilvadev.event.api.service.UserService;
+import com.ssilvadev.event.api.repository.user.UserRepository;
+import com.ssilvadev.event.api.service.user.UserService;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {

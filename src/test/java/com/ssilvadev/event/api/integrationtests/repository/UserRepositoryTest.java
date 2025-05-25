@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.ssilvadev.event.api.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.ssilvadev.event.api.model.user.Email;
-import com.ssilvadev.event.api.repository.UserRepository;
+import com.ssilvadev.event.api.repository.user.UserRepository;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ssilvadev.event.api.dto.event.response.ResponseEventDTO;
 import com.ssilvadev.event.api.dto.user.response.ResponseUserDTO;
 import com.ssilvadev.event.api.exception.EventNotFound;
+import com.ssilvadev.event.api.exception.SubscriptionNotFound;
 import com.ssilvadev.event.api.exception.UserAlreadyRegistred;
 import com.ssilvadev.event.api.exception.UserNotFound;
 import com.ssilvadev.event.api.mapper.DTOConverter;
@@ -95,7 +96,7 @@ public class EventUserService {
 
         if (subscription.isEmpty()) {
             logger.info("Subscription not found at the event id {} and userId", eventId, userId);
-            throw new IllegalArgumentException("Subscription not found");
+            throw new SubscriptionNotFound();
         }
 
         repository.delete(subscription.get());

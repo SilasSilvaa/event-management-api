@@ -57,6 +57,7 @@ public class MockEvent {
 				eventUrlImage,
 				capacity);
 
+		ReflectionTestUtils.setField(event, "id", 1L);
 		return event;
 	}
 
@@ -82,6 +83,7 @@ public class MockEvent {
 				eventUrlImage,
 				capacity);
 
+		ReflectionTestUtils.setField(event, "id", 1L);
 		return event;
 	}
 

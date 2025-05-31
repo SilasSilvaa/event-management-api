@@ -98,7 +98,7 @@ class UserControllerJsonTest extends AbstractIntegrationTest {
                         "size", 10,
                         "direction", "asc")
                 .when()
-                .get()
+                .get("/")
                 .then()
                 .statusCode(200)
                 .extract()

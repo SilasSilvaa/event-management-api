@@ -30,7 +30,7 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<Page<ResponseUserDTO>> getAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size,

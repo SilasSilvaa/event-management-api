@@ -1,12 +1,9 @@
 package com.ssilvadev.event.api.model.event;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import com.ssilvadev.event.api.model.event.address.Address;
-import com.ssilvadev.event.api.model.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -14,9 +11,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -47,10 +41,6 @@ public class Event {
 
     @Embedded
     private Capacity capacity;
-
-    @ManyToMany
-    @JoinTable(name = "event_user", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> eventSubscribers = new ArrayList<>();;
 
     @Column(name = "remote", nullable = false)
     private boolean remote;
@@ -119,7 +109,6 @@ public class Event {
                 eventImageUrl,
                 capacity,
                 true);
-
     }
 
     @Override

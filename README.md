@@ -528,13 +528,6 @@ response:
 ```
 
 ### `DELETE /api/management/v1/cancelSubscription/{eventId}/{userId}` (Cancel event subscription)
-query params
-``` bash
-    page, defaultValue = 0
-    size, defaultValue = 10
-    direction, defaultValue = "asc"
-```
-
 path variable
 ```bash
     userId

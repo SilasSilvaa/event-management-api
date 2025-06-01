@@ -44,7 +44,7 @@ public class EventController {
         return ResponseEntity.ok(service.getAll(pageable));
     }
 
-    @GetMapping(path = { "/{id}", "/remote/{id}" })
+    @GetMapping("/{id}")
     public ResponseEntity<ResponseEventDTO> getById(@PathVariable(name = "id", required = true) Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
@@ -67,8 +67,11 @@ public class EventController {
 
         ResponseEventDTO remoteEvent = service.createRemoteEvent(dto);
 
-        var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(remoteEvent.id()).toUri();
+        var uri = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/api/event/v1/{id}")
+                .buildAndExpand(remoteEvent.id())
+                .toUri();
 
         return ResponseEntity.created(uri).body(remoteEvent);
     }

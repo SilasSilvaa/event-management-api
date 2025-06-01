@@ -1,0 +1,56 @@
+INSERT INTO `event` (
+    `title`,
+    `description`,
+    `event_date`,
+    `address_street`,
+    `address_neighborhood`,
+    `address_city`,
+    `address_state`,
+    `address_cep`,
+    `event_url`,
+    `event_image_url`,
+    `capacity`,
+    `remote`
+) VALUES
+(
+    'Tech Conference 2025',
+    'A major conference focused on the latest trends in software development, AI, and cloud computing.',
+    '2025-06-20 09:00:00',
+    '123 Innovation Ave',
+    'Downtown',
+    'São Paulo',
+    'SP',
+    '01001000',
+    'https://example.com/tech-conference-2025',
+    'https://example.com/images/tech-conference.jpg',
+    500,
+    FALSE
+),
+(
+    'Remote Dev Meetup',
+    'An online meetup for remote developers around the world to connect and share ideas.',
+    '2025-07-05 18:00:00',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    'https://example.com/remote-dev-meetup',
+    'https://example.com/images/remote-meetup.jpg',
+    300,
+    TRUE
+),
+(
+    'AI & Machine Learning Bootcamp',
+    'An intensive 3-day bootcamp on applied machine learning and AI models.',
+    '2025-08-15 10:00:00',
+    '456 Knowledge St',
+    'Tech Park',
+    'Campinas',
+    'SP',
+    '13010000',
+    'https://example.com/ai-bootcamp',
+    'https://example.com/images/ai-bootcamp.jpg',
+    100,
+    FALSE
+);
